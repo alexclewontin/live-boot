@@ -10,7 +10,6 @@ Standards-Version: 3.9.6
 Homepage: http://live-systems.org/devel/live-boot/
 Vcs-Browser: http://live-systems.org/gitweb/?p=live-boot.git
 Vcs-Git: git://live-systems.org/git/live-boot.git
-
 Package: live-boot
 Architecture: all
 Depends:
