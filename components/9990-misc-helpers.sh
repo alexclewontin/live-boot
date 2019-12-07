@@ -98,6 +98,7 @@ check_dev ()
 	sysdev="${1}"
 	devname="${2}"
 	skip_uuid_check="${3}"
+	mount_opts="${LIVE_MEDIA_MOUNT_OPTS:-ro,noatime}"
 
 	# support for fromiso=.../isofrom=....
 	if [ -n "$FROMISO" ]
@@ -195,7 +196,7 @@ check_dev ()
 	then
 		devuid=$(blkid -o value -s UUID "$devname")
 		[ -n "$devuid" ] && grep -qs "\<$devuid\>" /var/lib/live/boot/devices-already-tried-to-mount && continue
-		mount -t ${fstype} -o ro,noatime "${devname}" ${mountpoint} || continue
+		mount -t ${fstype} -o "${mount_opts}" "${devname}" ${mountpoint} || continue
 		[ -n "$devuid" ] && echo "$devuid" >> /var/lib/live/boot/devices-already-tried-to-mount
 
 		if [ -n "${FINDISO}" ]
@@ -204,10 +205,10 @@ check_dev ()
 			then
 				umount ${mountpoint}
 				mkdir -p /live/findiso
-				mount -t ${fstype} -o ro,noatime "${devname}" /live/findiso
+				mount -t ${fstype} -o "${mount_opts}" "${devname}" /live/findiso
 				loopdevname=$(setup_loop "/live/findiso/${FINDISO}" "loop" "/sys/block/loop*" 0 "")
 				devname="${loopdevname}"
-				mount -t iso9660 -o ro,noatime "${devname}" ${mountpoint}
+				mount -t iso9660 -o "${mount_opts}" "${devname}" ${mountpoint}
 			else
 				umount ${mountpoint}
 			fi

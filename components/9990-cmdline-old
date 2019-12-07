@@ -100,6 +100,11 @@ Cmdline_old ()
 				export LIVE_MEDIA
 				;;
 
+			live-media-mount-opts=*)
+				LIVE_MEDIA_MOUNT_OPTS="${_PARAMETER#*=}"
+				export LIVE_MEDIA_MOUNT_OPTS
+				;;
+
 			live-media-encryption=*|encryption=*)
 				LIVE_MEDIA_ENCRYPTION="${_PARAMETER#*=}"
 				export LIVE_MEDIA_ENCRYPTION
